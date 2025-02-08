@@ -1,0 +1,24 @@
+@Metadata.layer: #CORE
+annotate entity ZV_DET_CLIENTE_0932 with
+{
+//  @UI.hidden: true
+//  IdCliente;
+//  @UI.hidden: true
+//  TipoAcceso;
+//  @UI.lineItem: [{ position: 10, importance: #HIGH }]
+//  @UI.fieldGroup: [{ position: 20 }]
+    @UI.hidden: true
+  Nombre;
+//  @UI.lineItem: [{ position: 20, importance: #MEDIUM }]
+//  @UI.fieldGroup: [{ qualifier: 'InfoCliente', position: 30 }]
+  @UI.hidden: true
+  Apellidos;
+//  @UI.lineItem: [{ position: 30, importance: #MEDIUM }]
+//  @UI.fieldGroup: [{ qualifier: 'InfoCliente', position: 40 }]
+  @UI.hidden: true
+  Email;
+//  @UI.lineItem: [{ position: 30, importance: #LOW }]
+//  @UI.fieldGroup: [{ qualifier: 'InfoCliente', position: 50 }]
+  @UI.hidden: true
+  Url;
+}

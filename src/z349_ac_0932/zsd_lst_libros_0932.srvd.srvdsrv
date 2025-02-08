@@ -1,0 +1,5 @@
+@EndUserText.label: 'SD - Lista Libros'
+define service ZSD_LST_LIBROS_0932 {
+  expose ZV_LST_LIBROS_0932 as ListaLibros;
+  expose ZV_LIB_CLNTS_0932  as LibroClientes;
+}

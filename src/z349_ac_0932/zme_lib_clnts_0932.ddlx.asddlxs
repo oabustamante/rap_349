@@ -1,0 +1,69 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+    typeName: 'Cliente',
+    typeNamePlural: 'Clientes',
+    typeImageUrl: '',
+    imageUrl: '',
+    title: {
+        type: #STANDARD,
+        label: 'Detalle del Cliente',
+        iconUrl: '',
+        criticality: '',
+        criticalityRepresentation: #WITHOUT_ICON,
+        value: 'IdCliente',
+        valueQualifier: '',
+        targetElement: '',
+        url: ''
+    },
+    description: {
+        type: #STANDARD,
+        label: 'Cli',
+        iconUrl: '',
+        criticality: '',
+        criticalityRepresentation: #WITHOUT_ICON,
+        value: '',
+        valueQualifier: '',
+        targetElement: '',
+        url: ''
+    }
+}
+
+annotate entity ZV_LIB_CLNTS_0932
+    with 
+{
+// 1
+
+    @UI.facet: [
+        { id: 'InfoCliente', label: 'Información del Cliente', type: #COLLECTION, position: 10 },
+        { id: 'Cliente', parentId: 'InfoCliente', label: 'Detalles', type: #FIELDGROUP_REFERENCE, targetQualifier: 'InfoCliente', position: 10 }
+        //{ id: 'DetCli', label: 'Clientes', type: #FIELDGROUP_REFERENCE, targetElement: '_DetalleCliente', position: 20 }
+        //{ id: 'DetCli', label: 'Clientes', type: #LINEITEM_REFERENCE, targetElement: '_DetalleCliente', position: 20 }
+        //{ id: 'Cliente', parentId: 'InfoCliente', label: 'Detalle', type: #FIELDGROUP_REFERENCE, targetQualifier: 'InfoCliente', position: 10, targetElement: '_DetalleCliente' }
+    ]
+
+// 2
+/*
+    @UI.facet: [
+        { id: 'InfoCliente', label: 'Información del Cliente', type: #FIELDGROUP_REFERENCE, targetQualifier: 'InfoCliente', position: 10, targetElement: '_DetalleCliente' }
+     //   { id: 'Cliente', label: 'Clientes', parentId: 'InfoCliente', type: #CONTACT_REFERENCE, targetElement: '_DetalleCliente', position: 10 }
+     //   { id: 'DetCli', label: 'Clientes', type: #FIELDGROUP_REFERENCE, targetElement: '_DetalleCliente', position: 20 }
+        //{ id: 'DetCli', label: 'Clientes', type: #LINEITEM_REFERENCE, targetElement: '_DetalleCliente', position: 20 }
+        //{ id: 'Cliente', parentId: 'InfoCliente', label: 'Detalle', type: #FIELDGROUP_REFERENCE, targetQualifier: 'InfoCliente', position: 10, targetElement: '_DetalleCliente' }
+    ]
+*/    
+    
+    
+    
+    @UI.lineItem: [{ position: 10, importance: #HIGH }]
+    @UI.fieldGroup: [{ qualifier: 'InfoCliente', position: 10 }]
+    IdCliente;
+    @UI.fieldGroup: [{ qualifier: 'InfoCliente', position: 20 }]
+    Nombre;
+    @UI.fieldGroup: [{ qualifier: 'InfoCliente', position: 30 }]
+    Apellidos;
+    @UI.fieldGroup: [{ qualifier: 'InfoCliente', position: 40 }]
+    Email;
+
+
+}

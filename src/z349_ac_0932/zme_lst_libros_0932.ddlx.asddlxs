@@ -1,0 +1,134 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+    typeName: 'Libro',
+    typeNamePlural: 'Libros',
+    typeImageUrl: '',
+    imageUrl: 'Url',
+    title: {
+        type: #STANDARD,
+        label: '',
+        iconUrl: '',
+        criticality: '',
+        criticalityRepresentation: #WITHOUT_ICON,
+        value: 'Titulo',
+        valueQualifier: '',
+        targetElement: '',
+        url: ''
+    },
+    description: {
+        type: #STANDARD,
+        label: '',
+        iconUrl: '',
+        criticality: '',
+        criticalityRepresentation: #WITHOUT_ICON,
+        value: 'Descripcion',
+        valueQualifier: '',
+        targetElement: '',
+        url: ''
+    }
+}
+@Search.searchable: true
+annotate entity ZV_LST_LIBROS_0932 with
+{
+  @UI.facet: [{
+          id: 'InfoLibro',
+          label: 'Detalles del Libro',
+          type: #COLLECTION,
+          position: 10
+      },
+      {
+          id: 'Libro',
+          parentId: 'InfoLibro',
+          label: 'Detalles',
+          type: #FIELDGROUP_REFERENCE,
+          targetQualifier: 'InfoLibro',
+          position: 10
+      },
+      {
+          id: 'Cliente',
+          label: 'Clientes',
+          type: #LINEITEM_REFERENCE,
+          targetElement: '_LibroCliente',
+          position: 20
+  }]
+  @UI.fieldGroup: [{
+      qualifier: 'InfoLibro',
+      position: 10
+  }]
+  IdLibro;
+  @UI: {
+      lineItem: [{
+          position: 10,
+          importance: #HIGH
+      }],
+      selectionField: [{
+          position: 10
+      }]
+  }
+  Titulo;
+  @UI.lineItem: [{
+      position: 20,
+      importance: #HIGH
+  }]
+  Autor;
+  @UI.lineItem: [{
+      position: 30,
+      importance: #HIGH
+  }]
+  Idioma;
+  @UI.lineItem: [{
+      position: 50,
+      importance: #LOW
+  }]
+  Precio;
+  @UI: {
+      fieldGroup: [{
+          qualifier: 'InfoLibro',
+          position: 20
+      }],
+      lineItem: [{
+          position: 60,
+          importance: #MEDIUM,
+          label: 'Categoria'
+      }]
+  }
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'ZV_CATEGO_0932',
+          element: 'Categoria'
+      }
+  }]
+  Categoria;
+  @UI: {
+      fieldGroup: [{
+          qualifier: 'InfoLibro',
+          position: 30
+      }],
+      lineItem: [{
+          position: 40,
+          importance: #LOW
+      }]
+  }
+  @Search: {
+      defaultSearchElement: true,
+      ranking: #MEDIUM,
+      fuzzinessThreshold: 0.8
+  }
+  Editorial;
+  @UI.fieldGroup: [{
+      qualifier: 'InfoLibro',
+      position: 40
+  }]
+  Paginas;
+  @UI.fieldGroup: [{
+      qualifier: 'InfoLibro',
+      position: 50
+  }]
+  Formato;
+  @UI.lineItem: [{
+      position: 70,
+      importance: #LOW,
+      criticality: 'Ventas'
+  }]
+  Estado;
+}
