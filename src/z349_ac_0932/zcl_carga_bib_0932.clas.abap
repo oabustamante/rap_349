@@ -131,11 +131,13 @@ CLASS zcl_carga_bib_0932 IMPLEMENTATION.
     INSERT ztb_clt_lib_0932 FROM TABLE @lt_clnts_lib.
 
 
+
+
 ******** ztb_libros_0932 ********
     "fill internal table
     lt_libros = VALUE #(
     ( id_libro = '000001' bi_categ = 'A' titulo = 'Diccionario de los sentimientos' autor = 'CAGIGAL, Jose Maria' editorial = 'ANAGRAMA' idioma = 'S' paginas = 350 precio = '84.99' moneda = 'USD' formato = 'E' url =
-    'https://eltinteroeditorial.com/wp-content/uploads/2017/06/c%C3%B3mo-es-el-proceso-de-edici%C3%B3n.jpg' )
+    'https://pictures.abebooks.com/inventory/md/md10644654597.jpg' )
     ( id_libro = '000002' bi_categ = 'A' titulo = 'La selva del lenguaje' autor = 'Hoagland , M.' editorial = 'LATERZ A' idioma = 'S' paginas = 486 precio = 146 moneda = 'USD' formato = 'P' url =
     'https://eltinteroeditorial.com/wp-content/uploads/2017/06/c%C3%B3mo-es-el-proceso-de-edici%C3%B3n.jpg' )
     ( id_libro = '000027' bi_categ = 'C' titulo = 'Camino al éxito' autor = 'Hoagland , M.' editorial = 'LATERZ A' idioma = 'S' paginas = 486 precio = 146 moneda = 'USD' formato = 'P' url =
