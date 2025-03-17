@@ -1,0 +1,6 @@
+@EndUserText.label: 'SD - Avisos'
+define service Zsd_viqmel_0932 {
+  expose ZV_VIQMEL_0932;
+  expose ZV_T024I_0932;
+  expose zv_tq80_0932;
+}

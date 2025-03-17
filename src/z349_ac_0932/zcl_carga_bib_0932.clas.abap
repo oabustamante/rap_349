@@ -11,7 +11,9 @@ ENDCLASS.
 
 
 
-CLASS zcl_carga_bib_0932 IMPLEMENTATION.
+CLASS ZCL_CARGA_BIB_0932 IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
 
     "NEW CHANGE
@@ -210,5 +212,4 @@ CLASS zcl_carga_bib_0932 IMPLEMENTATION.
     out->write( 'DONE!' ).
 
   ENDMETHOD.
-
 ENDCLASS.

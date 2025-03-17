@@ -1,0 +1,8 @@
+@EndUserText.label: 'SD - Travel Approval'
+define service Zsd_atravel_0932 {
+  expose ZC_ATRAVEL_0932   as Travel;
+  expose ZC_ABOOKING_0932  as Booking;
+  expose /DMO/I_Customer   as Passenger;
+  expose /DMO/I_Agency     as Agency;
+  expose /DMO/I_Connection as Connection;
+}

@@ -24,7 +24,8 @@ ENDCLASS.
 
 
 
-CLASS zcl_data_file_upload_0932 IMPLEMENTATION.
+CLASS ZCL_DATA_FILE_UPLOAD_0932 IMPLEMENTATION.
+
 
   METHOD get_html.
     ui_html =
@@ -151,6 +152,7 @@ CLASS zcl_data_file_upload_0932 IMPLEMENTATION.
       |</html> |.
   ENDMETHOD.
 
+
   METHOD get_input_field_value.
 
     FIELD-SYMBOLS: <value> TYPE data,
@@ -163,6 +165,7 @@ CLASS zcl_data_file_upload_0932 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 
   METHOD if_http_service_extension~handle_request.
 
@@ -287,5 +290,4 @@ CLASS zcl_data_file_upload_0932 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
-
 ENDCLASS.

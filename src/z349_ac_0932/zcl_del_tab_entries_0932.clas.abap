@@ -9,7 +9,11 @@ CLASS zcl_del_tab_entries_0932 DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zcl_del_tab_entries_0932 IMPLEMENTATION.
+
+
+CLASS ZCL_DEL_TAB_ENTRIES_0932 IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
     DELETE FROM ztb_libros_0932.
     IF sy-subrc EQ 0.

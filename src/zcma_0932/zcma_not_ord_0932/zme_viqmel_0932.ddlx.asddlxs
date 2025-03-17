@@ -1,0 +1,117 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+    typeName: 'Aviso',
+    typeNamePlural: 'Avisos',
+    typeImageUrl: '',
+    imageUrl: '',
+    title: {
+        type: #STANDARD,
+        label: '',
+        iconUrl: '',
+        criticality: '',
+        criticalityRepresentation: #WITHOUT_ICON,
+        value: 'Codificacion',
+        valueQualifier: '',
+        targetElement: '',
+        url: ''
+    },
+    description: {
+        type: #STANDARD,
+        label: '',
+        iconUrl: '',
+        criticality: '',
+        criticalityRepresentation: #WITHOUT_ICON,
+        value: 'Descripcion',
+        valueQualifier: '',
+        targetElement: '',
+        url: ''
+    }
+}
+
+annotate entity ZV_VIQMEL_0932 with
+{
+  @UI.facet: [{
+          id: 'InfoAviso',
+          label: 'Detalles del Libro',
+          type: #COLLECTION,
+          position: 10
+      },
+      {
+          id: 'Aviso',
+          parentId: 'InfoAviso',
+          label: 'Detalles',
+          type: #FIELDGROUP_REFERENCE,
+          targetQualifier: 'InfoAviso',
+          position: 10
+      },
+      {
+          id: 'Sector',
+          label: 'Sector',
+          type: #LINEITEM_REFERENCE,
+          targetElement: '_GpoPlan',
+          position: 20
+  }]
+  @UI: {
+      fieldGroup: [{
+          qualifier: 'InfoAviso',
+          position: 10
+      }],
+      lineItem: [{
+          position: 10,
+          importance: #HIGH,
+          label: 'Aviso'
+      }]
+  }
+  NumeroAviso;
+  @UI.fieldGroup: [{
+      qualifier: 'InfoAviso',
+      position: 20
+  }]
+  Descripcion;
+  @UI.lineItem: [{
+        position: 30,
+        importance: #HIGH
+    }]
+  FechaAviso;
+  @UI.fieldGroup: [{
+      qualifier: 'InfoAviso',
+      position: 30
+  }]
+  GpoCodigo;
+  @UI.fieldGroup: [{
+      qualifier: 'InfoAviso',
+      position: 40
+  }]
+  Codificacion;
+  @UI.lineItem: [{
+      position: 40,
+      importance: #MEDIUM
+  }]
+  Calle;
+  @UI.lineItem: [{
+      position: 50,
+      importance: #MEDIUM
+  }]
+  Numero;
+  @UI.fieldGroup: [{
+      qualifier: 'InfoAviso',
+      position: 30
+  }]
+  EntreCalles;
+  @UI.lineItem: [{
+      position: 60,
+      importance: #MEDIUM
+  }]
+  Distrito;
+  @UI.fieldGroup: [{
+      qualifier: 'InfoAviso',
+      position: 50
+  }]
+  CodigoPostal;
+  @UI.lineItem: [{
+      position: 70,
+      importance: #MEDIUM
+  }]
+  Poblacion;
+}
