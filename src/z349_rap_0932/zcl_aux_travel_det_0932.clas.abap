@@ -19,8 +19,6 @@ CLASS zcl_aux_travel_det_0932 DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-
-
 CLASS zcl_aux_travel_det_0932 IMPLEMENTATION.
   METHOD calculate_price.
     DATA:

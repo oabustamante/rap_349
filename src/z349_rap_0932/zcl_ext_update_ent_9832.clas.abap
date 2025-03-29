@@ -9,8 +9,6 @@ CLASS zcl_ext_update_ent_9832 DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-
-
 CLASS zcl_ext_update_ent_9832 IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
     MODIFY ENTITIES OF zr_travel_0932

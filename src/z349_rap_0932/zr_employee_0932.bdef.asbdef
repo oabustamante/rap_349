@@ -1,0 +1,26 @@
+managed implementation in class zbp_r_employee_0932 unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZR_EMPLOYEE_0932 alias Employee
+persistent table zemployee_0932
+draft table zemployee_d_0932
+lock master
+total etag lchg_date_time
+authorization master ( instance )
+etag master lchg_date_time
+{
+  create; // ( precheck );
+  update;
+  delete;
+  field ( readonly, numbering : managed ) e_number;
+  //mapping for ZR_EMPLOYEE_0932 corresponding;
+
+  // 5a Clase - 00:20
+  draft action Edit;    // Habilitar
+  draft action Activate optimized;
+  draft action Discard; // Habilitar
+  draft action Resume;  // with additional implementation
+  draft determine action Prepare {
+  }
+}

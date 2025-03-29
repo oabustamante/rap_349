@@ -5,4 +5,5 @@ CLASS zbp_r_booksuppl_0932 DEFINITION
 ENDCLASS.
 
 CLASS zbp_r_booksuppl_0932 IMPLEMENTATION.
+
 ENDCLASS.

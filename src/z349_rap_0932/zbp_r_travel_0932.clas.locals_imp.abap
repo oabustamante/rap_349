@@ -23,36 +23,12 @@ CLASS lhc_Travel DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
       validateStatus   FOR VALIDATE ON SAVE IMPORTING keys FOR Travel~validateStatus.
 
-*    METHODS get_instance_features FOR INSTANCE FEATURES
-*      IMPORTING keys REQUEST requested_features FOR Travel RESULT result.
-*
-*    METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
-*      IMPORTING keys REQUEST requested_authorizations FOR Travel RESULT result.
-*
-*    METHODS acceptTravel FOR MODIFY
-*      IMPORTING keys FOR ACTION Travel~acceptTravel RESULT result.
-*
-*    METHODS createTravelByTemplate FOR MODIFY
-*      IMPORTING keys FOR ACTION Travel~createTravelByTemplate RESULT result.
-*
-*    METHODS rejectTravel FOR MODIFY
-*      IMPORTING keys FOR ACTION Travel~rejectTravel RESULT result.
-*
-*    METHODS validateCustomer FOR VALIDATE ON SAVE
-*      IMPORTING keys FOR Travel~validateCustomer.
-*
-*    METHODS validateDates FOR VALIDATE ON SAVE
-*      IMPORTING keys FOR Travel~validateDates.
-*
-*    METHODS validateStatus FOR VALIDATE ON SAVE
-*      IMPORTING keys FOR Travel~validateStatus.
-
 ENDCLASS.
 
 CLASS lhc_Travel IMPLEMENTATION.
 
   METHOD get_instance_features.
-    READ ENTITIES OF zr_travel_0932
+    READ ENTITIES OF zr_travel_0932 "IN LOCAL MODE
         ENTITY Travel
         FIELDS (  TravelId OverallStatus )
         WITH VALUE #( FOR key_row_read IN keys ( %key = key_row_read-%key ) )

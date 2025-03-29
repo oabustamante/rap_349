@@ -11,6 +11,7 @@
         }
     }
 }
+
 annotate entity ZC_ABOOKING_0932
     with 
 {

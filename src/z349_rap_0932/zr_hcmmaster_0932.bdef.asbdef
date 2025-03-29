@@ -1,0 +1,19 @@
+unmanaged implementation in class zbp_r_hcmmaster_0932 unique;
+strict ( 2 );
+
+// Utilizar OData V2
+
+define behavior for ZR_HCMMASTER_0932 alias HCMMaster
+//late numbering
+lock master
+authorization master ( instance )
+//authorization master ( global, instance )
+//etag master <field_name>
+{
+  create;   // ( features: global );
+  update;
+  delete;
+  field ( readonly ) e_number;
+  field ( mandatory : create ) e_name;
+  //mapping for ZR_HCMMASTER_0932 corresponding;
+}

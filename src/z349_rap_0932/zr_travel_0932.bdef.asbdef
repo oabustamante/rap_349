@@ -6,7 +6,7 @@ implementation in class zbp_r_travel_0932 unique
 persistent table ztb_travel_0932
 with additional save    // llamar al class saver
 lock master
-authorization master ( instance )
+authorization master ( instance ) //, global ) Con global, no muestra entradas y manda un DUMP
 etag master LastChangedAt
 {
   create;
@@ -46,9 +46,10 @@ etag master LastChangedAt
       LastChangedAt = last_changed_at;
     }
 
-  //  association _Booking { create; }
+  // association _Booking { create; }
   // En conjunto con la implementación GET_INSTANCE_FEATURES
   // Para la corrección de posibles bugs en la navegación
+  // En ocasiones no navega, habilitando y deshabilitando se refresca y navega bien
   association _Booking { create ( features : instance ); }
 }
 
@@ -88,10 +89,10 @@ etag master LastChangedAt
     }
 
   association _Travel;
-  //  association _BookingSupplement { create; }
+  association _BookingSupplement { create; }
   // En conjunto con la implementación GET_INSTANCE_FEATURES
   // Para la corrección de posibles bugs en la navegación
-  association _BookingSupplement { create ( features : instance ); }
+  //association _BookingSupplement { create ( features : instance ); }
 }
 
 define behavior for ZR_BOOKSUPPL_0932 alias BookingSupplement

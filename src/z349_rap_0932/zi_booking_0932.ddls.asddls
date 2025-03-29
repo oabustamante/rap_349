@@ -17,7 +17,7 @@ define view entity ZI_BOOKING_0932
       BookingStatus,
       @Semantics.systemDateTime.localInstanceLastChangedAt: true
       LastChangedAt,
-
+      /* Associations */
       _Travel            : redirected to parent ZI_TRAVEL_0932,
       _BookingSupplement : redirected to composition child ZI_BOOKSUPPL_0932,
       _Customer,

@@ -29,5 +29,6 @@ define root view entity ZI_TRAVEL_0932
       _Booking : redirected to composition child ZI_BOOKING_0932,
       _Agency,
       _Customer,
-      _Currency
+      _Currency,
+      _OverallStatus
 }

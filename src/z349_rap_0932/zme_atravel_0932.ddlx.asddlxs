@@ -10,6 +10,7 @@
         }
     }
 }
+
 annotate entity ZC_ATRAVEL_0932 with
 {
   @UI.facet: [{
