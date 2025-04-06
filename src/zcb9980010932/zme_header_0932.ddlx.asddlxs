@@ -1,0 +1,8 @@
+@Metadata.layer: #CORE
+annotate entity zc_header_0932
+    with 
+{
+    @UI.hidden: true
+    ID;
+    
+}
