@@ -1,0 +1,156 @@
+@Metadata.layer: #CORE
+@UI: {
+    headerInfo: {
+        typeName: 'Item',
+        typeNamePlural: 'Items',
+        title: {
+            type: #STANDARD,
+            label: 'Items',
+            value: 'ID'
+        }
+    }
+}
+annotate entity zc_items_0932
+    with 
+{
+    @UI.facet: [ {
+        id: 'Items',
+        purpose: #STANDARD,
+        type: #IDENTIFICATION_REFERENCE,
+        label: 'Items',
+        position: 10 
+    } ]
+    @UI.hidden: true
+    ID;
+    
+    @UI: { 
+        identification: [ { 
+            position: 10,
+            label: 'Name'
+        } ]
+    }
+    ItemPos;
+    
+    @UI: { 
+        identification: [ { 
+            position: 20,
+            label: 'Name'
+        } ]
+    }
+    Name;
+    
+    @UI: { 
+        identification: [ { 
+            position: 30,
+            label: 'Description'
+        } ]
+    }
+    Description;
+
+    @UI: { 
+        identification: [ { 
+            position: 40,
+            label: 'Name'
+        } ]
+    }
+    ReleaseDate;
+    
+    @UI: { 
+        identification: [ { 
+            position: 50,
+            label: 'Description'
+        } ]
+    }
+    DiscontinuedDate;
+
+
+    @UI: { 
+        identification: [ { 
+            position: 60,
+            label: 'Price'
+        } ]
+    }
+    Price;
+
+    @UI: { 
+        identification: [ { 
+            position: 70,
+            label: 'Currency'
+        } ]
+    }
+    @Consumption.valueHelpDefinition: [{
+        entity: {
+            name: 'I_Currency',
+            element: 'Currency'
+        },
+        useForValidation: true
+    }]
+    CurrencyCode;
+
+    @UI: { 
+        identification: [ { 
+            position: 80,
+            label: 'Height'
+        } ]
+    }
+    Height;
+
+    @UI: { 
+        identification: [ { 
+            position: 90,
+            label: 'Width'
+        } ]
+    }
+    Width;
+
+    @UI: { 
+        identification: [ { 
+            position: 100,
+            label: 'Depth'
+        } ]
+    }
+    Depth;
+
+    @UI: { 
+        identification: [ { 
+            position: 110,
+            label: 'Quantity'
+        } ]
+    }
+    Quantity;
+
+    @UI: { 
+        identification: [ { 
+            position: 120,
+            label: 'Unit of Measure'
+        } ]
+    }
+    @Consumption.valueHelpDefinition: [{
+        entity: {
+            name: 'I_UnitOfMeasure',
+            element: 'UnitOfMeasure'
+        },
+        useForValidation: true
+    }]
+    UnitOfMeasure;
+
+    @UI.hidden: true
+    ChangedOn;
+
+//@Consumption.valueHelpDefinition: [{
+//      entity: {
+//          name: '/DMO/I_SUPPLEMENT',
+//          element: 'SupplementID'
+//      },
+//      additionalBinding: [{
+//          localElement: 'Price',
+//          element: 'Price'
+//      },
+//      {
+//          localElement: 'CurrencyCode',
+//          element: 'CurrencyCode'
+//      }]
+//  }]
+
+
+}

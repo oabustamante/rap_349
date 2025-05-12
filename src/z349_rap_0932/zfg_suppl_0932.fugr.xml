@@ -11,39 +11,6 @@
     <item>
      <FUNCNAME>Z_UPD_SUPPL_0932</FUNCNAME>
      <SHORT_TEXT>Update Supplements</SHORT_TEXT>
-     <IMPORT>
-      <RSIMP>
-       <PARAMETER>IT_SUPPLEMENTS</PARAMETER>
-       <REFERENCE>X</REFERENCE>
-       <TYP>ZTT_SUPPL_0932</TYP>
-      </RSIMP>
-      <RSIMP>
-       <PARAMETER>IV_MODE</PARAMETER>
-       <REFERENCE>X</REFERENCE>
-       <TYP>ZDE_UPD_MODE_0932</TYP>
-      </RSIMP>
-     </IMPORT>
-     <EXPORT>
-      <RSEXP>
-       <PARAMETER>EV_UPDATED</PARAMETER>
-       <REFERENCE>X</REFERENCE>
-       <TYP>ZDE_UPD_MODE_0932</TYP>
-      </RSEXP>
-     </EXPORT>
-     <DOCUMENTATION>
-      <RSFDO>
-       <PARAMETER>IT_SUPPLEMENTS</PARAMETER>
-       <KIND>P</KIND>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>IV_MODE</PARAMETER>
-       <KIND>P</KIND>
-      </RSFDO>
-      <RSFDO>
-       <PARAMETER>EV_UPDATED</PARAMETER>
-       <KIND>P</KIND>
-      </RSFDO>
-     </DOCUMENTATION>
     </item>
    </FUNCTIONS>
   </asx:values>

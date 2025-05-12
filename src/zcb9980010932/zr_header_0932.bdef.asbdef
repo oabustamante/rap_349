@@ -1,0 +1,149 @@
+managed;    //with implementation in class zbp_r_header_0932 unique;
+strict ( 2 );
+with draft;
+
+define behavior for zr_header_0932 alias Header
+implementation in class zbp_r_header_0932 unique
+persistent table zso_header_0932
+draft table zso_header_0932d
+//with additional save
+lock master
+total etag ChangedOn
+authorization master ( instance, global )
+etag master ChangedOn
+{
+  create;
+  update;
+  delete;
+
+  association _Items { create ( features : instance, authorization : update ); with draft; }
+
+  field ( numbering : managed, readonly ) ID;
+  field ( readonly ) OrderStatus,
+  // ImageURL;
+  TotalPrice,
+  CurrencyCode,
+  CreatedOn,
+  CreatedBy,
+  ChangedOn,
+  ChangedBy;
+  field ( mandatory ) Email;
+
+  determination setDocumentID on save { create; }
+  determination setInitialStatus on save { create; }
+
+  action releaseOrder;
+
+  validation validateEmailAddress on save { create; field Email; }
+  validation validateDeliveryDate on save { create; field DeliveryDate; }
+  validation validateCountryCode on save { create; field Country; }
+
+  determine action validateEmail { validation validateEmailAddress; }
+  determine action validateDelivery { validation validateDeliveryDate; }
+  determine action validateCountry { validation validateCountryCode; }
+
+  side effects
+  {
+    determine action validateEmail executed on field Email affects messages;
+    determine action validateDelivery executed on field DeliveryDate affects messages;
+    determine action validateCountry executed on field Country affects messages;
+  }
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume with additional implementation;
+
+  draft determine action Prepare
+  {
+    validation validateEmailAddress;
+    validation validateDeliveryDate;
+    validation validateCountryCode;
+  }
+
+  mapping for zso_header_0932
+    {
+      ID           = id;
+      Email        = email;
+      FirstName    = first_name;
+      LastName     = last_name;
+      Country      = country;
+      DeliveryDate = delivery_date;
+      OrderStatus  = order_status;
+      ImageURL     = image_url;
+      TotalPrice   = total_price;
+      CurrencyCode = currency_code;
+      CreatedOn    = crea_date_time;
+      CreatedBy    = crea_uname;
+      ChangedOn    = lchg_date_time;
+      ChangedBy    = lchg_uname;
+    }
+}
+
+define behavior for zr_items_0932 alias Items
+implementation in class zbp_r_items_0932 unique
+persistent table zso_items_0932
+draft table zso_items_0932d
+lock dependent by _Header
+authorization dependent by _Header
+//etag master
+etag master ChangedOn
+//early numbering
+{
+  update;
+  delete;
+
+  association _Header { with draft; }
+
+  field ( readonly ) ID, ItemPos, ChangedOn;
+  field ( mandatory ) Name,
+  Description,
+  ReleaseDate,
+  DiscontinuedDate,
+  Price,
+  CurrencyCode,
+  //Height,
+  //Width,
+  //Depth,
+  Quantity;
+  //UnitOfMeasure;
+
+  determination setItemPosition on save { create; }
+  determination calculateTotalPrice on modify { create; field Price, CurrencyCode, Quantity; }
+
+  validation validationReleaseDiscontinued on save { field ReleaseDate, DiscontinuedDate; }
+  validation validateCurrencyCode on save { create; field CurrencyCode; }
+  validation validateMeasuresValues on save { create; field Height, Width, Depth; }
+  validation validateUnitOfMeasure on save { create; field UnitOfMeasure; }
+
+  determine action validateDates { validation validationReleaseDiscontinued; }
+  determine action validateCurrency { validation validateCurrencyCode; }
+  determine action validateMeasures { validation validateMeasuresValues; }
+  determine action validateUOM { validation validateUnitOfMeasure; }
+
+  side effects
+  {
+    field Price affects field _Header.TotalPrice;
+    field CurrencyCode affects field _Header.TotalPrice;
+    field Quantity affects field _Header.TotalPrice;
+    determine action validateMeasures executed on field Height, field Width, field Depth affects messages;
+  }
+
+  mapping for zso_items_0932
+    {
+      ID               = id;
+      ItemPos          = item_pos;
+      Name             = name;
+      Description      = description;
+      ReleaseDate      = release_date;
+      DiscontinuedDate = discontinued_date;
+      Price            = price;
+      CurrencyCode     = currency_code;
+      Height           = height;
+      Width            = width;
+      Depth            = depth;
+      Quantity         = quantity;
+      UnitOfMeasure    = unit_of_measure;
+      ChangedOn        = changed_on;
+    }
+}

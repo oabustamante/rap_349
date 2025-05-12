@@ -2,25 +2,28 @@
 @EndUserText.label: 'Interface - Sales Order: Header'
 @Metadata.ignorePropagatedAnnotations: true
 define root view entity zi_header_0932
-  provider contract transactional_interface
+  provider contract transactional_interface // Create, Update, Delete
   as projection on zr_header_0932
 {
-  key id             as ID,
-      email          as Email,
-      first_name     as FirstName,
-      last_name      as LastName,
-      country        as Country,
-      delivery_date  as DeliveryDate,
-      order_status   as OrderStatus,
-      image_url      as ImageURL,
+  key ID,
+      Email,
+      FirstName,
+      LastName,
+      Country,
+      DeliveryDate,
+      OrderStatus,
+      ImageURL,
+      @Semantics.amount.currencyCode: 'CurrencyCode'
+      TotalPrice,
+      CurrencyCode,
       @Semantics.systemDateTime.createdAt: true
-      crea_date_time as CreatedOn,
+      CreatedOn,
       @Semantics.user.createdBy: true
-      crea_uname     as CreatedBy,
+      CreatedBy,
       @Semantics.systemDateTime.lastChangedAt: true
-      lchg_date_time as ChangedOn,
+      ChangedOn,
       @Semantics.user.lastChangedBy: true
-      lchg_uname     as ChangedBy,
+      ChangedBy,
       /* Associations */
       _Items : redirected to composition child zi_items_0932,
       _Country

@@ -1,8 +1,167 @@
 @Metadata.layer: #CORE
-annotate entity zc_header_0932
-    with 
+@Search.searchable: true
+@UI: {
+    headerInfo: {
+        typeName: 'Order',
+        typeNamePlural: 'Orders',
+        title: {
+            type: #STANDARD,
+            value: 'ID'
+        }
+    },
+    presentationVariant: [ {
+        sortOrder: [ {
+            by: 'ID',
+            direction: #DESC
+        } ],
+        visualizations: [ {
+            type: #AS_LINEITEM
+        } ]
+    } ]
+
+}
+annotate entity zc_header_0932 with
 {
-    @UI.hidden: true
-    ID;
-    
+  @UI.facet: [{
+  //        qualifier: '',
+  //        feature: '',
+      id: 'Header',
+      purpose: #STANDARD,
+  //        parentId: '',
+      position: 10,
+  //        exclude: true,
+  //        hidden: true,
+  //        isPartOfPreview: true,
+  //        isSummary: true,
+  //        isMap: true,
+  //        importance: ,
+      label: 'Sales Orders',
+      type: #IDENTIFICATION_REFERENCE
+  //        targetElement: '',
+  //        targetQualifier: '',
+  //        url: ''
+  }, {
+      id: 'Items',
+      parentId: 'Header',
+      label: 'Items',
+      type: #LINEITEM_REFERENCE,
+      targetElement: '_Items',
+      position: 20
+  }]
+
+
+  @UI.hidden: true
+  ID;
+
+  @UI.hidden: true
+  ImageURL;
+
+  @UI: {
+      fieldGroup: [{
+            qualifier: 'Order',
+            position: 10
+        }],
+      lineItem: [{
+          position: 10,
+          importance: #HIGH,
+          label: 'Status'
+      }],
+      selectionField: [{
+          position: 10
+      }]
+  }
+  OrderStatus;
+
+  @UI: {
+      lineItem: [{
+          position: 20,
+          importance: #HIGH,
+          label: 'Fecha de Creación'
+      }],
+      selectionField: [{
+          position: 20
+      }]
+  }
+  CreatedOn;
+
+  @UI: {
+      lineItem: [{
+          position: 30,
+          importance: #HIGH ,
+          label: 'Fecha de Entrega'
+      }],
+      selectionField: [{
+          position: 30
+      }]
+  }
+  DeliveryDate;
+
+  @UI: {
+      lineItem: [{
+          position: 40,
+          importance: #MEDIUM,
+          label: 'Pais'
+      }]
+  }
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'I_CountryVH',
+          element: 'Country'
+      },
+      useForValidation: true
+  }]
+  Country;
+
+  @UI: {
+      lineItem: [{
+          position: 50,
+          importance: #LOW,
+          label: 'Nombre'
+      }]
+  }
+  FirstName;
+
+  @UI: {
+      lineItem: [{
+          position: 60,
+          importance: #LOW,
+          label: 'Apellido'
+      }]
+  }
+  LastName;
+
+  @UI: { 
+      identification: [ { 
+          position: 50,
+          label: 'Total Price'
+      } ]
+  }
+  TotalPrice;
+
+  @UI: { 
+      identification: [ { 
+          position: 60,
+          label: 'Currency'
+      } ]
+  }
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'I_Currency',
+          element: 'Currency'
+      },
+      useForValidation: true
+  }]
+  CurrencyCode;
+
+  @Search.defaultSearchElement: true
+  Email;
+
+  @UI.hidden: true
+  CreatedBy;
+
+  @UI.hidden: true
+  ChangedOn;
+
+  @UI.hidden: true
+  ChangedBy;
 }

@@ -4,25 +4,28 @@
 define view entity zi_items_0932
   as projection on zr_items_0932
 {
-  key id                as ID,
-      name              as Name,
-      description       as Description,
-      release_date      as ReleaseDate,
-      discontinued_date as DiscontinuedDate,
+  key ID,
+  key ItemPos,
+      Name,
+      Description,
+      ReleaseDate,
+      DiscontinuedDate,
       @Semantics.amount.currencyCode: 'CurrencyCode'
-      price             as Price,
-      currency_code     as CurrencyCode,
+      Price,
+      CurrencyCode,
       @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
-      height            as Height,
+      Height,
       @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
-      width             as Width,
+      Width,
       @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
-      depth             as Depth,
+      Depth,
       @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
-      quantity          as Quantity,
-      unit_of_measure   as UnitOfMeasure,
+      Quantity,
+      UnitOfMeasure,
+      @Semantics.systemDateTime.lastChangedAt: true
+      ChangedOn,
       /* Associations */
-      _Header: redirected to parent zi_header_0932,
+      _Header : redirected to parent zi_header_0932,
       _Currency,
       _UnitOfMeasure
 }

@@ -10,27 +10,30 @@
 define view entity zr_items_0932
   as select from zso_items_0932 as Items
 
-  association        to parent zr_header_0932 as _Header        on $projection.id = _Header.id
+  association        to parent zr_header_0932 as _Header        on $projection.ID = _Header.ID
 
-  association [1..1] to I_Currency            as _Currency      on $projection.currency_code = _Currency.Currency
-  association [1..1] to I_UnitOfMeasure       as _UnitOfMeasure on $projection.unit_of_measure = _UnitOfMeasure.UnitOfMeasure
+  association [1..1] to I_Currency            as _Currency      on $projection.CurrencyCode = _Currency.Currency
+  association [1..1] to I_UnitOfMeasure       as _UnitOfMeasure on $projection.UnitOfMeasure = _UnitOfMeasure.UnitOfMeasure
 {
-  key id,
-      name,
-      description,
-      release_date,
-      discontinued_date,
-      @Semantics.amount.currencyCode: 'currency_code'
-      price,
-      currency_code,
-      @Semantics.quantity.unitOfMeasure: 'unit_of_measure'
-      height,
-      @Semantics.quantity.unitOfMeasure: 'unit_of_measure'
-      width,
-      @Semantics.quantity.unitOfMeasure: 'unit_of_measure'
-      depth,
-      quantity,
-      unit_of_measure,
+  key id                as ID,
+  key item_pos          as ItemPos,
+      name              as Name,
+      description       as Description,
+      release_date      as ReleaseDate,
+      discontinued_date as DiscontinuedDate,
+      @Semantics.amount.currencyCode: 'CurrencyCode'
+      price             as Price,
+      currency_code     as CurrencyCode,
+      @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
+      height            as Height,
+      @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
+      width             as Width,
+      @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
+      depth             as Depth,
+      quantity          as Quantity,
+      unit_of_measure   as UnitOfMeasure,
+      @Semantics.systemDateTime.lastChangedAt: true
+      changed_on        as ChangedOn,
       // Associations
       _Header,
       _Currency,

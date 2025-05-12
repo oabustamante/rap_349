@@ -7,13 +7,14 @@
 define view entity zc_items_0932
   as projection on zr_items_0932
 {
-  key id                as ID,
-      name              as Name,
-      description       as Description,
-      release_date      as ReleaseDate,
-      discontinued_date as DiscontinuedDate,
+  key ID,
+  key ItemPos,
+      Name,
+      Description,
+      ReleaseDate,
+      DiscontinuedDate,
       @Semantics.amount.currencyCode: 'CurrencyCode'
-      price             as Price,
+      Price,
       @Semantics.currencyCode: true
       @Consumption.valueHelpDefinition: [ {
         entity: {
@@ -22,15 +23,15 @@ define view entity zc_items_0932
         },
         useForValidation: true
       }]
-      currency_code     as CurrencyCode,
+      CurrencyCode,
       @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
-      height            as Height,
+      Height,
       @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
-      width             as Width,
+      Width,
       @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
-      depth             as Depth,
+      Depth,
       @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
-      quantity          as Quantity,
+      Quantity,
       @Consumption.valueHelpDefinition: [ {
         entity: {
             name: 'I_UnitOfMeasureStdVH',
@@ -38,7 +39,9 @@ define view entity zc_items_0932
         },
         useForValidation: true
       }]
-      unit_of_measure   as UnitOfMeasure,
+      UnitOfMeasure,
+      @Semantics.systemDateTime.lastChangedAt: true
+      ChangedOn,
       /* Associations */
       _Header : redirected to parent zc_header_0932,
       _Currency,

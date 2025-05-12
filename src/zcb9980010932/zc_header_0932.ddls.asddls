@@ -8,10 +8,10 @@ define root view entity zc_header_0932
   provider contract transactional_query
   as projection on zr_header_0932
 {
-  key id             as ID,
-      email          as Email,
-      first_name     as FirstName,
-      last_name      as LastName,
+  key ID,
+      Email,
+      FirstName,
+      LastName,
       @Consumption.valueHelpDefinition: [ {
         entity: {
             name: 'I_CountryVH',
@@ -19,18 +19,21 @@ define root view entity zc_header_0932
         },
         useForValidation: true
       }]
-      country        as Country,
-      delivery_date  as DeliveryDate,
-      order_status   as OrderStatus,
-      image_url      as ImageURL,
+      Country,
+      DeliveryDate,
+      OrderStatus,
+      ImageURL,
+      @Semantics.amount.currencyCode: 'CurrencyCode'
+      TotalPrice,
+      CurrencyCode,
       @Semantics.systemDateTime.createdAt: true
-      crea_date_time as CreatedOn,
+      CreatedOn,
       @Semantics.user.createdBy: true
-      crea_uname     as CreatedBy,
+      CreatedBy,
       @Semantics.systemDateTime.lastChangedAt: true
-      lchg_date_time as ChangedOn,
+      ChangedOn,
       @Semantics.user.lastChangedBy: true
-      lchg_uname     as ChangedBy,
+      ChangedBy,
       /* Associations */
       _Items : redirected to composition child zc_items_0932,
       _Country
