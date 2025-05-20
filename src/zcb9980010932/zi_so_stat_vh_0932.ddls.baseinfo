@@ -3,15 +3,10 @@
 {
 "FROM":
 [
-"ZSO_HEADER_0932"
+"ZSO_STAT_0932"
 ],
 "ASSOCIATED":
-[
-"I_COUNTRY",
-"I_CURRENCY",
-"ZI_SO_STAT_VH_0932",
-"ZR_ITEMS_0932"
-],
+[],
 "BASE":
 [],
 "ANNO_REF":

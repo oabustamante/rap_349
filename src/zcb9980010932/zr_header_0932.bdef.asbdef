@@ -12,14 +12,14 @@ total etag ChangedOn
 authorization master ( instance, global )
 etag master ChangedOn
 {
-  create;
-  update;
-  delete;
+  create ( precheck );
+  update ( precheck, features : instance );
+  delete ( features : instance );
 
   association _Items { create ( features : instance, authorization : update ); with draft; }
 
-  field ( numbering : managed, readonly ) ID;
-  field ( readonly ) OrderStatus,
+  field ( numbering : managed, readonly ) OrderUUID;
+  field ( readonly ) OrderID, //OrderStatus,
   // ImageURL;
   TotalPrice,
   CurrencyCode,
@@ -29,10 +29,17 @@ etag master ChangedOn
   ChangedBy;
   field ( mandatory ) Email;
 
-  determination setDocumentID on save { create; }
+  field ( features : instance ) OrderStatus;
+
+  determination setOrderID on save { create; }
+  //determination setInitialStatus on modify { create; }
   determination setInitialStatus on save { create; }
 
-  action releaseOrder;
+  // releaseOrder
+  //action (features: instance, authorization : update ) acceptOrder result [1] $self;
+  //action (features: instance, authorization : update ) rejectOrder result [1] $self;
+  //action (features: instance, authorization : update ) deductDiscount result [1] $self;
+  //action (features: instance, authorization : update ) deductDiscount parameter zi_ae_discount_0932 result [1] $self;
 
   validation validateEmailAddress on save { create; field Email; }
   validation validateDeliveryDate on save { create; field DeliveryDate; }
@@ -63,11 +70,13 @@ etag master ChangedOn
 
   mapping for zso_header_0932
     {
-      ID           = id;
+      OrderUUID    = order_uuid;
+      OrderID      = id;
       Email        = email;
       FirstName    = first_name;
       LastName     = last_name;
       Country      = country;
+      PostingDate  = posting_date;
       DeliveryDate = delivery_date;
       OrderStatus  = order_status;
       ImageURL     = image_url;
@@ -87,7 +96,7 @@ draft table zso_items_0932d
 lock dependent by _Header
 authorization dependent by _Header
 //etag master
-etag master ChangedOn
+//etag master ChangedOn
 //early numbering
 {
   update;
@@ -95,7 +104,8 @@ etag master ChangedOn
 
   association _Header { with draft; }
 
-  field ( readonly ) ID, ItemPos, ChangedOn;
+  field ( numbering : managed, readonly ) ItemUUID;
+  field ( readonly ) ParentUUID, ItemPos, ChangedOn;
   field ( mandatory ) Name,
   Description,
   ReleaseDate,
@@ -108,6 +118,7 @@ etag master ChangedOn
   Quantity;
   //UnitOfMeasure;
 
+  //  determination setItemPosition on save { create; }
   determination setItemPosition on save { create; }
   determination calculateTotalPrice on modify { create; field Price, CurrencyCode, Quantity; }
 
@@ -131,7 +142,8 @@ etag master ChangedOn
 
   mapping for zso_items_0932
     {
-      ID               = id;
+      ItemUUID         = item_uuid;
+      ParentUUID       = parent_uuid;
       ItemPos          = item_pos;
       Name             = name;
       Description      = description;

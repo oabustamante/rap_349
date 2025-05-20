@@ -1,12 +1,4 @@
-class ZBP_R_ITEMS_0932 definition
-  public
-  abstract
-  final
-  create public .
-
-public section.
-protected section.
-private section.
+CLASS zbp_r_items_0932 DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zr_header_0932.
 ENDCLASS.
 
 

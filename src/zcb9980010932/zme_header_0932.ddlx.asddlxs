@@ -6,12 +6,13 @@
         typeNamePlural: 'Orders',
         title: {
             type: #STANDARD,
-            value: 'ID'
+            label: 'Order',
+            value: 'OrderUUID'
         }
     },
     presentationVariant: [ {
         sortOrder: [ {
-            by: 'ID',
+            by: 'OrderID',
             direction: #DESC
         } ],
         visualizations: [ {
@@ -23,72 +24,99 @@
 annotate entity zc_header_0932 with
 {
   @UI.facet: [{
-  //        qualifier: '',
-  //        feature: '',
-      id: 'Header',
+      id: 'Order',
       purpose: #STANDARD,
-  //        parentId: '',
       position: 10,
-  //        exclude: true,
-  //        hidden: true,
-  //        isPartOfPreview: true,
-  //        isSummary: true,
-  //        isMap: true,
-  //        importance: ,
-      label: 'Sales Orders',
+      label: 'Sales Order',
       type: #IDENTIFICATION_REFERENCE
-  //        targetElement: '',
-  //        targetQualifier: '',
-  //        url: ''
   }, {
       id: 'Items',
-      parentId: 'Header',
+      purpose: #STANDARD,
+      //parentId: 'Order',
       label: 'Items',
       type: #LINEITEM_REFERENCE,
       targetElement: '_Items',
       position: 20
   }]
 
-
   @UI.hidden: true
-  ID;
+  OrderUUID;
 
-  @UI.hidden: true
+  @UI: {
+      identification: [{
+          position: 5
+      }],
+      lineItem: [{
+          position: 5,
+          importance: #HIGH,
+          label: 'Order ID'
+      }]
+  }
+  OrderID;
+
+  @UI: {
+      identification: [{
+          position: 80
+      }],
+      lineItem:[{
+          position: 6,
+          type: #WITH_URL,
+          url: 'ImageURL' 
+      }]
+  }
+  //@UI.hidden: true
   ImageURL;
 
   @UI: {
-      fieldGroup: [{
-            qualifier: 'Order',
-            position: 10
-        }],
+      identification: [{
+          position: 70
+      }],
       lineItem: [{
           position: 10,
           importance: #HIGH,
           label: 'Status'
+      }, { 
+          type: #FOR_ACTION,
+          dataAction: 'deductDiscount',
+          label: 'Discount' 
       }],
       selectionField: [{
           position: 10
       }]
   }
+  @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'zi_so_stat_vh_0932',
+          element: 'Status'
+      },
+      useForValidation: true
+  }]
   OrderStatus;
 
   @UI: {
       lineItem: [{
           position: 20,
           importance: #HIGH,
-          label: 'Fecha de Creación'
+          label: 'Posting Date'
+      }],
+      identification: [{
+          position: 50,
+          label: 'Posting Date'
       }],
       selectionField: [{
           position: 20
       }]
   }
-  CreatedOn;
+  PostingDate;
 
   @UI: {
       lineItem: [{
           position: 30,
           importance: #HIGH ,
-          label: 'Fecha de Entrega'
+          label: 'Delivery Date'
+      }],
+      identification: [{
+          position: 60
       }],
       selectionField: [{
           position: 30
@@ -100,7 +128,10 @@ annotate entity zc_header_0932 with
       lineItem: [{
           position: 40,
           importance: #MEDIUM,
-          label: 'Pais'
+          label: 'Country'
+      }],
+      identification: [{
+          position: 40
       }]
   }
   @Consumption.valueHelpDefinition: [{
@@ -116,7 +147,10 @@ annotate entity zc_header_0932 with
       lineItem: [{
           position: 50,
           importance: #LOW,
-          label: 'Nombre'
+          label: 'First Name'
+      }],
+      identification: [{
+          position: 20
       }]
   }
   FirstName;
@@ -125,14 +159,17 @@ annotate entity zc_header_0932 with
       lineItem: [{
           position: 60,
           importance: #LOW,
-          label: 'Apellido'
+          label: 'Last Name'
+      }],
+      identification: [{
+          position: 30
       }]
   }
   LastName;
 
   @UI: { 
       identification: [ { 
-          position: 50,
+          position: 90,
           label: 'Total Price'
       } ]
   }
@@ -140,7 +177,7 @@ annotate entity zc_header_0932 with
 
   @UI: { 
       identification: [ { 
-          position: 60,
+          position: 100,
           label: 'Currency'
       } ]
   }
@@ -153,9 +190,18 @@ annotate entity zc_header_0932 with
   }]
   CurrencyCode;
 
+  @UI: { 
+      identification: [ { 
+          position: 10,
+          label: 'Email'
+      } ]
+  }
   @Search.defaultSearchElement: true
   Email;
 
+  @UI.hidden: true
+  CreatedOn;
+  
   @UI.hidden: true
   CreatedBy;
 

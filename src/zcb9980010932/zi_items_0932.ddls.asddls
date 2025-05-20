@@ -4,8 +4,9 @@
 define view entity zi_items_0932
   as projection on zr_items_0932
 {
-  key ID,
-  key ItemPos,
+  key ItemUUID,
+      ParentUUID,
+      ItemPos,
       Name,
       Description,
       ReleaseDate,

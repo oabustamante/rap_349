@@ -8,7 +8,8 @@ define root view entity zc_header_0932
   provider contract transactional_query
   as projection on zr_header_0932
 {
-  key ID,
+  key OrderUUID,
+      OrderID,
       Email,
       FirstName,
       LastName,
@@ -20,8 +21,11 @@ define root view entity zc_header_0932
         useForValidation: true
       }]
       Country,
+      PostingDate,
       DeliveryDate,
+      @ObjectModel.text.element: [ 'StatusText' ]
       OrderStatus,
+      _Status.Text as StatusText,
       ImageURL,
       @Semantics.amount.currencyCode: 'CurrencyCode'
       TotalPrice,
@@ -36,5 +40,7 @@ define root view entity zc_header_0932
       ChangedBy,
       /* Associations */
       _Items : redirected to composition child zc_items_0932,
-      _Country
+      _Status,
+      _Country,
+      _Currency
 }

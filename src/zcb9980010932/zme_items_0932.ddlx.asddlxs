@@ -6,7 +6,7 @@
         title: {
             type: #STANDARD,
             label: 'Items',
-            value: 'ID'
+            value: 'ItemUUID'
         }
     }
 }
@@ -21,17 +21,25 @@ annotate entity zc_items_0932
         position: 10 
     } ]
     @UI.hidden: true
-    ID;
+    ItemUUID;
     
-    @UI: { 
+    @UI: {
+        lineItem: [{
+            position: 10,
+            importance: #HIGH
+        }],
         identification: [ { 
             position: 10,
-            label: 'Name'
+            label: 'Position'
         } ]
     }
     ItemPos;
     
-    @UI: { 
+    @UI: {
+        lineItem: [{
+            position: 20,
+            importance: #HIGH
+        }],
         identification: [ { 
             position: 20,
             label: 'Name'
@@ -39,7 +47,11 @@ annotate entity zc_items_0932
     }
     Name;
     
-    @UI: { 
+    @UI: {
+        lineItem: [{
+            position: 30,
+            importance: #HIGH
+        }],
         identification: [ { 
             position: 30,
             label: 'Description'
@@ -47,18 +59,26 @@ annotate entity zc_items_0932
     }
     Description;
 
-    @UI: { 
+    @UI: {
+        lineItem: [{
+            position: 40,
+            importance: #HIGH
+        }],
         identification: [ { 
             position: 40,
-            label: 'Name'
+            label: 'Release Date'
         } ]
     }
     ReleaseDate;
     
-    @UI: { 
+    @UI: {
+        lineItem: [{
+            position: 50,
+            importance: #HIGH
+        }],
         identification: [ { 
             position: 50,
-            label: 'Description'
+            label: 'Discontinued Date'
         } ]
     }
     DiscontinuedDate;

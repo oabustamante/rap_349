@@ -10,13 +10,14 @@
 define view entity zr_items_0932
   as select from zso_items_0932 as Items
 
-  association        to parent zr_header_0932 as _Header        on $projection.ID = _Header.ID
+  association        to parent zr_header_0932 as _Header        on $projection.ParentUUID = _Header.OrderUUID
 
   association [1..1] to I_Currency            as _Currency      on $projection.CurrencyCode = _Currency.Currency
   association [1..1] to I_UnitOfMeasure       as _UnitOfMeasure on $projection.UnitOfMeasure = _UnitOfMeasure.UnitOfMeasure
 {
-  key id                as ID,
-  key item_pos          as ItemPos,
+  key item_uuid         as ItemUUID,
+      parent_uuid       as ParentUUID,
+      item_pos          as ItemPos,
       name              as Name,
       description       as Description,
       release_date      as ReleaseDate,

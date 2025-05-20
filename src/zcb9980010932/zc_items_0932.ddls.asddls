@@ -7,8 +7,9 @@
 define view entity zc_items_0932
   as projection on zr_items_0932
 {
-  key ID,
-  key ItemPos,
+  key ItemUUID,
+      ParentUUID,
+      ItemPos,
       Name,
       Description,
       ReleaseDate,
@@ -32,13 +33,7 @@ define view entity zc_items_0932
       Depth,
       @Semantics.quantity.unitOfMeasure: 'UnitOfMeasure'
       Quantity,
-      @Consumption.valueHelpDefinition: [ {
-        entity: {
-            name: 'I_UnitOfMeasureStdVH',
-            element: 'UnitOfMeasure'
-        },
-        useForValidation: true
-      }]
+
       UnitOfMeasure,
       @Semantics.systemDateTime.lastChangedAt: true
       ChangedOn,

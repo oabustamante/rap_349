@@ -7,7 +7,7 @@ define behavior for zi_header_0932 alias Header
   use update;
   use delete;
 
-  use action releaseOrder;
+  //use action releaseOrder;
   use action validateEmail;
   use action validateDelivery;
   use action validateCountry;
