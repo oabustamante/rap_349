@@ -18,7 +18,9 @@ define root view entity zr_header_0932
          country        as Country,
          posting_date   as PostingDate,
          delivery_date  as DeliveryDate,
+         //@ObjectModel: { text: { element: [ 'StatusText' ] }
          order_status   as OrderStatus,
+         //_Status.Text   as StatusText,
          image_url      as ImageURL,
          @Semantics.amount.currencyCode: 'CurrencyCode'
          total_price    as TotalPrice,

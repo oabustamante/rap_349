@@ -32,6 +32,54 @@
      <MSGNR>004</MSGNR>
      <TEXT>Delivery date cannot be earlier than Posting Date</TEXT>
     </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMC_ORDER_0932</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Currency code is not valid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMC_ORDER_0932</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Unit of Measure is not valid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMC_ORDER_0932</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Price can&apos;t be less than 0</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMC_ORDER_0932</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Height can&apos;t be less than 0</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMC_ORDER_0932</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Width can&apos;t be less than 0</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMC_ORDER_0932</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>Depth can&apos;t be less than 0</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMC_ORDER_0932</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Quantity can&apos;t be less than 0</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZMC_ORDER_0932</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Discontinued Date must be greater than Release Date</TEXT>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>

@@ -77,12 +77,13 @@ annotate entity zc_header_0932 with
           label: 'Status'
       }, { 
           type: #FOR_ACTION,
-          dataAction: 'deductDiscount',
-          label: 'Discount' 
+          dataAction: 'cancelOrder',
+          label: 'Cancel Order' 
       }],
       selectionField: [{
           position: 10
-      }]
+      }],
+      textArrangement: #TEXT_ONLY
   }
   @Consumption.valueHelpDefinition: [{
       entity: {
@@ -92,16 +93,19 @@ annotate entity zc_header_0932 with
       useForValidation: true
   }]
   OrderStatus;
+  
+  @UI.hidden: true
+  StatusText;
 
   @UI: {
       lineItem: [{
           position: 20,
           importance: #HIGH,
-          label: 'Posting Date'
+          label: 'Created On'
       }],
       identification: [{
           position: 50,
-          label: 'Posting Date'
+          label: 'Created On'
       }],
       selectionField: [{
           position: 20
@@ -174,6 +178,18 @@ annotate entity zc_header_0932 with
       } ]
   }
   TotalPrice;
+
+  @UI: {
+      lineItem: [{
+          position: 95,
+          importance: #HIGH,
+          label: 'Price With TAX'
+      }],
+      identification: [{
+          position: 95
+      }]
+  }
+  PriceWithVAT;  
 
   @UI: { 
       identification: [ { 

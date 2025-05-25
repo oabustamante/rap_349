@@ -32,14 +32,15 @@ etag master ChangedOn
   field ( features : instance ) OrderStatus;
 
   determination setOrderID on save { create; }
-  //determination setInitialStatus on modify { create; }
-  determination setInitialStatus on save { create; }
+  determination setInitialStatus on modify { create; }
+  determination calculateTotalPrice on modify { create; } //field TotalPrice, CurrencyCode; }
 
-  // releaseOrder
-  //action (features: instance, authorization : update ) acceptOrder result [1] $self;
-  //action (features: instance, authorization : update ) rejectOrder result [1] $self;
+  action (features: instance, authorization : update ) cancelOrder result [1] $self;
+  //action (features: instance, authorization : update ) prepareOrder result [1] $self;
+  //action (features: instance, authorization : update ) cancelOrder result [1] $self;
   //action (features: instance, authorization : update ) deductDiscount result [1] $self;
   //action (features: instance, authorization : update ) deductDiscount parameter zi_ae_discount_0932 result [1] $self;
+  internal action reCalculateTotalPrice;
 
   validation validateEmailAddress on save { create; field Email; }
   validation validateDeliveryDate on save { create; field DeliveryDate; }
@@ -66,6 +67,11 @@ etag master ChangedOn
     validation validateEmailAddress;
     validation validateDeliveryDate;
     validation validateCountryCode;
+
+    validation Items~validationReleaseDiscontinued;
+    validation Items~validateCurrencyCode;
+    validation Items~validateMeasuresValues;
+    validation Items~validateUnitOfMeasure;
   }
 
   mapping for zso_header_0932
@@ -124,7 +130,7 @@ authorization dependent by _Header
 
   validation validationReleaseDiscontinued on save { field ReleaseDate, DiscontinuedDate; }
   validation validateCurrencyCode on save { create; field CurrencyCode; }
-  validation validateMeasuresValues on save { create; field Height, Width, Depth; }
+  validation validateMeasuresValues on save { create; field Price, Height, Width, Depth, Quantity; }
   validation validateUnitOfMeasure on save { create; field UnitOfMeasure; }
 
   determine action validateDates { validation validationReleaseDiscontinued; }
@@ -134,10 +140,10 @@ authorization dependent by _Header
 
   side effects
   {
-    field Price affects field _Header.TotalPrice;
-    field CurrencyCode affects field _Header.TotalPrice;
+//    field Price affects field _Header.TotalPrice;
+//    field CurrencyCode affects field _Header.TotalPrice;
     field Quantity affects field _Header.TotalPrice;
-    determine action validateMeasures executed on field Height, field Width, field Depth affects messages;
+    determine action validateMeasures executed on field Price, field Height, field Width, field Depth affects messages;
   }
 
   mapping for zso_items_0932

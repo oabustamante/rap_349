@@ -1,0 +1,9 @@
+@EndUserText.label: 'SD - Sales Orders'
+define service Zsd_orders_0932 {
+  expose zc_header_0932     as Header;
+  expose zc_items_0932      as Items;
+  expose ZI_SO_STAT_VH_0932 as Status;
+  expose I_Country          as Country;
+  expose I_Currency         as Currency;
+  expose I_UnitOfMeasure    as UnitOfMeasure;
+}

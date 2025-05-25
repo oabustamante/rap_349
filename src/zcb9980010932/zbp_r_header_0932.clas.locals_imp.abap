@@ -1,11 +1,16 @@
 CLASS lhc_Header DEFINITION INHERITING FROM cl_abap_behavior_handler.
   PRIVATE SECTION.
+    TYPES:
+      "t_entities_create TYPE TABLE FOR CREATE /dmo/r_travel_d\\travel,
+      t_entities_upd TYPE TABLE FOR UPDATE zr_header_0932\\header.
+
     CONSTANTS:
       BEGIN OF so_status,
-        cancelled TYPE int1 VALUE '250',
-        completed TYPE int1 VALUE '200',
-        open      TYPE int1 VALUE '100',
-        partially TYPE int1 VALUE '150',
+        cancelled TYPE int1 VALUE 5,  "'250',    " 5
+        delivered TYPE int1 VALUE 4,  "'200',    " 4
+        new       TYPE int1 VALUE 1,  "'100',    " 1
+        preparing TYPE int1 VALUE 2,  "'110',    " 2
+        sent      TYPE int1 VALUE 3,  "'150',    " 3
       END OF so_status.
     METHODS:
       get_instance_features FOR INSTANCE FEATURES
@@ -32,7 +37,7 @@ CLASS lhc_Header DEFINITION INHERITING FROM cl_abap_behavior_handler.
 *      setInitialStatus FOR DETERMINE ON MODIFY
 *        IMPORTING keys FOR Header~setInitialStatus,
 
-      setInitialStatus FOR DETERMINE ON SAVE
+      setInitialStatus FOR DETERMINE ON MODIFY "SAVE
         IMPORTING keys FOR Header~setInitialStatus,
 
       validateCountryCode FOR VALIDATE ON SAVE
@@ -42,7 +47,15 @@ CLASS lhc_Header DEFINITION INHERITING FROM cl_abap_behavior_handler.
         IMPORTING keys FOR Header~validateDeliveryDate,
 
       validateEmailAddress FOR VALIDATE ON SAVE
-        IMPORTING keys FOR Header~validateEmailAddress.
+        IMPORTING keys FOR Header~validateEmailAddress,
+
+      cancelOrder FOR MODIFY
+        IMPORTING keys FOR ACTION Header~cancelOrder RESULT result,
+
+      reCalculateTotalPrice FOR MODIFY
+        IMPORTING keys FOR ACTION Header~reCalculateTotalPrice,
+      calculateTotalPrice FOR DETERMINE ON MODIFY
+            IMPORTING keys FOR Header~calculateTotalPrice.
 
 ENDCLASS.
 
@@ -51,23 +64,23 @@ CLASS lhc_Header IMPLEMENTATION.
   METHOD get_instance_features.
     READ ENTITIES OF zr_header_0932 IN LOCAL MODE
         ENTITY Header
-        FIELDS ( OrderStatus )
+        FIELDS ( OrderID
+                 OrderStatus )
         WITH CORRESPONDING #( keys )
         RESULT DATA(headers).
 
-*    result = VALUE #( FOR header IN headers ( %tky = header-%tky
-*                                              %field-OrderStatus = COND #( WHEN header-OrderStatus = so_status-completed
-*                                                                           THEN if_abap_behv=>fc-f-read_only
-*                                                                           ELSE if_abap_behv=>fc-f-unrestricted ) ) ).
-
+* Disable update and delete buttons if status is delivered and status is only read
     result = VALUE #( FOR header IN headers ( %tky = header-%tky
-                                              %field-OrderStatus = COND #( WHEN header-OrderStatus EQ so_status-completed OR header-OrderStatus IS INITIAL
+                                              %field-OrderStatus = COND #( WHEN header-OrderStatus EQ so_status-delivered OR header-OrderID IS INITIAL " OR header-OrderStatus IS INITIAL
                                                                            THEN if_abap_behv=>fc-f-read_only
                                                                            ELSE if_abap_behv=>fc-f-unrestricted )
-                                              %update            = COND #( WHEN header-OrderStatus EQ so_status-completed
+                                              %action-cancelOrder = COND #( WHEN header-OrderStatus EQ so_status-cancelled OR header-OrderStatus EQ so_status-delivered
+                                                                            THEN if_abap_behv=>fc-o-disabled
+                                                                            ELSE if_abap_behv=>fc-o-enabled )
+                                              %update            = COND #( WHEN header-OrderStatus EQ so_status-delivered
                                                                            THEN if_abap_behv=>fc-o-disabled
                                                                            ELSE if_abap_behv=>fc-o-enabled )
-                                              %delete            = COND #( WHEN header-OrderStatus EQ so_status-completed
+                                              %delete            = COND #( WHEN header-OrderStatus EQ so_status-delivered
                                                                            THEN if_abap_behv=>fc-o-disabled
                                                                            ELSE if_abap_behv=>fc-o-enabled ) ) ).
   ENDMETHOD.
@@ -110,7 +123,6 @@ CLASS lhc_Header IMPLEMENTATION.
           ENTITY Header
           UPDATE FIELDS ( OrderID )
           WITH VALUE #( FOR header IN headers INDEX INTO i ( %tky    = header-%tky
-
                                                              OrderID = max_order_id + 1 ) ).
     ENDIF.
   ENDMETHOD.
@@ -118,7 +130,7 @@ CLASS lhc_Header IMPLEMENTATION.
   METHOD setInitialStatus.
     READ ENTITIES OF zr_header_0932 IN LOCAL MODE
         ENTITY Header
-        FIELDS ( OrderStatus )
+        FIELDS ( OrderStatus CurrencyCode )
         WITH CORRESPONDING #( keys )
         RESULT DATA(headers).
 
@@ -126,14 +138,12 @@ CLASS lhc_Header IMPLEMENTATION.
     IF headers IS NOT INITIAL.
       MODIFY ENTITIES OF zr_header_0932 IN LOCAL MODE
         ENTITY Header
-        UPDATE FIELDS ( OrderStatus )
-        WITH VALUE #( FOR header IN headers ( %tky        = header-%tky
-                                              OrderStatus = so_status-open ) ).
+        UPDATE FIELDS ( OrderStatus CurrencyCode )
+        WITH VALUE #( FOR header IN headers ( %tky         = header-%tky
+                                              OrderStatus  = so_status-new
+                                              CurrencyCode = 'USD' ) ).
     ENDIF.
   ENDMETHOD.
-
-*  METHOD deductDiscount.
-*  ENDMETHOD.
 
   METHOD validateCountryCode.
     DATA countries TYPE SORTED TABLE OF I_Country WITH UNIQUE KEY Country.  " DEFAULT KEY.
@@ -255,6 +265,93 @@ CLASS lhc_Header IMPLEMENTATION.
 *                       ignore_case   = abap_true
 *                     ).
     ENDLOOP.
+  ENDMETHOD.
+
+  METHOD cancelOrder.
+    MODIFY ENTITIES OF zr_header_0932 IN LOCAL MODE
+        ENTITY Header
+        UPDATE FIELDS ( OrderStatus )
+        WITH VALUE #( FOR key IN keys ( %tky        = key-%tky
+                                        OrderStatus = so_status-cancelled ) ).
+
+    READ ENTITIES OF zr_header_0932 IN LOCAL MODE
+        ENTITY Header
+        ALL FIELDS WITH CORRESPONDING #( keys )
+        RESULT DATA(headers).
+
+    result = VALUE #( FOR header IN headers ( %tky   = header-%tky
+                                              %param = header ) ).
+  ENDMETHOD.
+
+  METHOD reCalculateTotalPrice.
+    TYPES:
+      BEGIN OF ts_amnt_curr,
+        amount   TYPE zr_header_0932-TotalPrice,
+        currency TYPE zr_header_0932-CurrencyCode,
+      END OF ts_amnt_curr,
+
+      tt_amnt_curr TYPE STANDARD TABLE OF ts_amnt_curr.
+
+    DATA lt_amnt_curr TYPE tt_amnt_curr.
+
+    READ ENTITIES OF zr_header_0932 IN LOCAL MODE
+        ENTITY Header
+        FIELDS ( TotalPrice CurrencyCode )
+        WITH CORRESPONDING #( keys )
+        RESULT DATA(headers).
+
+    DELETE headers WHERE CurrencyCode IS INITIAL.
+
+    LOOP AT headers ASSIGNING FIELD-SYMBOL(<header>).
+      lt_amnt_curr = VALUE #( ( amount   = <header>-TotalPrice
+                                currency = <header>-CurrencyCode ) ).
+
+      " Read Items
+      READ ENTITIES OF zr_header_0932 IN LOCAL MODE
+        ENTITY Header BY \_Items
+        FIELDS ( Price CurrencyCode Quantity )
+        WITH VALUE #(  ( %tky = <header>-%tky ) )
+        RESULT DATA(items).
+
+      LOOP AT items ASSIGNING FIELD-SYMBOL(<item>).
+        COLLECT VALUE ts_amnt_curr( amount   = <item>-Price * <item>-Quantity
+                                    currency = <item>-CurrencyCode ) INTO lt_amnt_curr.
+      ENDLOOP.
+
+      CLEAR <header>-TotalPrice.
+      " Set USD as default currency code in Sales Order Header
+      "<header>-CurrencyCode = 'USD'.
+      LOOP AT lt_amnt_curr INTO DATA(ls_amnt_curr).
+        IF ls_amnt_curr-currency = <header>-CurrencyCode.
+          <header>-TotalPrice += ls_amnt_curr-amount.
+        ELSE.
+          IF ls_amnt_curr-amount GT 0.
+            /dmo/cl_flight_amdp=>convert_currency(
+              EXPORTING
+                iv_amount               = ls_amnt_curr-amount
+                iv_currency_code_source = ls_amnt_curr-currency
+                iv_currency_code_target = <header>-CurrencyCode
+                iv_exchange_rate_date   = cl_abap_context_info=>get_system_date( )
+              IMPORTING
+                ev_amount               = DATA(total_price_items_curr)
+            ).
+            <header>-TotalPrice += total_price_items_curr.
+          ENDIF.
+        ENDIF.
+      ENDLOOP.
+    ENDLOOP.
+
+    MODIFY ENTITIES OF zr_header_0932 IN LOCAL MODE
+        ENTITY Header
+        UPDATE FIELDS ( TotalPrice )
+        WITH CORRESPONDING #( headers ).
+  ENDMETHOD.
+
+  METHOD calculateTotalPrice.
+    MODIFY ENTITIES OF zr_header_0932 IN LOCAL MODE
+        ENTITY Header
+        EXECUTE reCalculateTotalPrice
+        FROM CORRESPONDING #( keys ).
   ENDMETHOD.
 
 ENDCLASS.
