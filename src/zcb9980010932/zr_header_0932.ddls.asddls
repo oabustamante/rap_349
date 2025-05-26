@@ -4,11 +4,11 @@
 define root view entity zr_header_0932
   as select from zso_header_0932 as Header
 
-  composition [0..*] of zr_items_0932 as _Items
+  composition [0..*] of zr_items_0932      as _Items
 
-  association [1..1] to ZI_SO_STAT_VH_0932 as _Status on $projection.OrderStatus = _Status.Status
-  association [0..1] to I_Country     as _Country  on $projection.Country = _Country.Country
-  association [1..1] to I_Currency    as _Currency on $projection.CurrencyCode = _Currency.Currency
+  association [1..1] to ZI_SO_STAT_VH_0932 as _Status   on $projection.OrderStatus = _Status.Status
+  association [0..1] to I_Country          as _Country  on $projection.Country = _Country.Country
+  association [1..1] to I_Currency         as _Currency on $projection.CurrencyCode = _Currency.Currency
 {
   key    order_uuid     as OrderUUID,
          id             as OrderID,
@@ -20,7 +20,14 @@ define root view entity zr_header_0932
          delivery_date  as DeliveryDate,
          //@ObjectModel: { text: { element: [ 'StatusText' ] }
          order_status   as OrderStatus,
+         //''             as StatCrit,
          //_Status.Text   as StatusText,
+         //         case
+         //            when order_status = 1 or order_status = 2 then 0
+         //            when order_status = 3 then 2
+         //            when order_status = 4 then 3
+         //            else 1
+         //          end as Critic,
          image_url      as ImageURL,
          @Semantics.amount.currencyCode: 'CurrencyCode'
          total_price    as TotalPrice,

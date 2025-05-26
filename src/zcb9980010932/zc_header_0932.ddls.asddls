@@ -26,6 +26,14 @@ define root view entity zc_header_0932
           @ObjectModel.text.element: [ 'StatusText' ]
           OrderStatus,
           _Status.Text as StatusText,
+          _Status.Criticality as Criticality,
+//          case OrderStatus
+//          when 1 then 5
+//          when 2 then 0
+//          when 3 then 3
+//          when 4 then 3 
+//          when 5 then 1
+//          end as StatCrit,
           ImageURL,
           @Semantics.amount.currencyCode: 'CurrencyCode'
           TotalPrice,

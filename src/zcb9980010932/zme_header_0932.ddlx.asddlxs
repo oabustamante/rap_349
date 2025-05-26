@@ -74,7 +74,8 @@ annotate entity zc_header_0932 with
       lineItem: [{
           position: 10,
           importance: #HIGH,
-          label: 'Status'
+          label: 'Status',
+          criticality: 'Criticality'
       }, { 
           type: #FOR_ACTION,
           dataAction: 'cancelOrder',
@@ -96,6 +97,9 @@ annotate entity zc_header_0932 with
   
   @UI.hidden: true
   StatusText;
+  
+  @UI.hidden: true
+  Criticality;
 
   @UI: {
       lineItem: [{
