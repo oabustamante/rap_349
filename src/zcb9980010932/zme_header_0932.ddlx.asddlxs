@@ -4,6 +4,7 @@
     headerInfo: {
         typeName: 'Order',
         typeNamePlural: 'Orders',
+        imageUrl: 'ImageURL',
         title: {
             type: #STANDARD,
             label: 'Order',
@@ -57,14 +58,14 @@ annotate entity zc_header_0932 with
   @UI: {
       identification: [{
           position: 80
-      }],
-      lineItem:[{
-          position: 6,
-          type: #WITH_URL,
-          url: 'ImageURL' 
-      }]
+      }] //,
+//      lineItem:[{
+//          position: 6,
+//          //type: #WITH_URL,
+//          url: 'ImageURL'          
+//      }]
   }
-  //@UI.hidden: true
+//  @UI.hidden: true
   ImageURL;
 
   @UI: {

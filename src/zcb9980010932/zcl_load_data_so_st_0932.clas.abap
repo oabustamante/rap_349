@@ -10,8 +10,6 @@ CLASS zcl_load_data_so_st_0932 DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-
-
 CLASS zcl_load_data_so_st_0932 IMPLEMENTATION.
 
 

@@ -71,18 +71,19 @@ CLASS lhc_Header IMPLEMENTATION.
 
 * Disable update and delete buttons if status is delivered and status is only read
     result = VALUE #( FOR header IN headers ( %tky = header-%tky
-                                              %field-OrderStatus = COND #( WHEN header-OrderStatus EQ so_status-delivered OR header-OrderID IS INITIAL " OR header-OrderStatus IS INITIAL
-                                                                           THEN if_abap_behv=>fc-f-read_only
-                                                                           ELSE if_abap_behv=>fc-f-unrestricted )
+                                              %field-OrderStatus  = COND #( WHEN header-OrderStatus EQ so_status-delivered OR header-OrderID IS INITIAL " OR header-OrderStatus IS INITIAL
+                                                                            THEN if_abap_behv=>fc-f-read_only
+                                                                            ELSE if_abap_behv=>fc-f-unrestricted )
+                                              %assoc-_Items       = if_abap_behv=>fc-o-enabled
                                               %action-cancelOrder = COND #( WHEN header-OrderStatus EQ so_status-cancelled OR header-OrderStatus EQ so_status-delivered
                                                                             THEN if_abap_behv=>fc-o-disabled
                                                                             ELSE if_abap_behv=>fc-o-enabled )
-                                              %update            = COND #( WHEN header-OrderStatus EQ so_status-delivered
-                                                                           THEN if_abap_behv=>fc-o-disabled
-                                                                           ELSE if_abap_behv=>fc-o-enabled )
-                                              %delete            = COND #( WHEN header-OrderStatus EQ so_status-delivered
-                                                                           THEN if_abap_behv=>fc-o-disabled
-                                                                           ELSE if_abap_behv=>fc-o-enabled ) ) ).
+                                              %update             = COND #( WHEN header-OrderStatus EQ so_status-delivered
+                                                                            THEN if_abap_behv=>fc-o-disabled
+                                                                            ELSE if_abap_behv=>fc-o-enabled )
+                                              %delete             = COND #( WHEN header-OrderStatus EQ so_status-delivered
+                                                                            THEN if_abap_behv=>fc-o-disabled
+                                                                            ELSE if_abap_behv=>fc-o-enabled ) ) ).
   ENDMETHOD.
 
   METHOD get_instance_authorizations.

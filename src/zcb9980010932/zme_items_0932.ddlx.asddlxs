@@ -139,12 +139,12 @@ annotate entity zc_items_0932
     }
     Quantity;
 
-    @UI: { 
-        identification: [ { 
-            position: 120,
-            label: 'Unit of Measure'
-        } ]
-    }
+//    @UI: { 
+//        identification: [ { 
+//            position: 120,
+//            label: 'Unit of Measure'
+//        } ]
+//    }
     @Consumption.valueHelpDefinition: [{
         entity: {
             name: 'I_UnitOfMeasure',

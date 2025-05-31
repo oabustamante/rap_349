@@ -151,7 +151,7 @@ CLASS lhc_Items IMPLEMENTATION.
     LOOP AT items INTO DATA(item).
       APPEND VALUE #( %tky        = item-%tky
                       %state_area = 'WRONG_VALUES' ) TO reported-items.
-      IF item-Price LT 0.
+      IF item-Price LT 1.
         APPEND VALUE #( %tky = item-%tky ) TO failed-items.
 
         APPEND VALUE #( %tky           = item-%tky
